@@ -1,4 +1,4 @@
 ---
 # handlers file for role-solr
 - name: solr restart
-  service: name=solr state=restart
+  service: name=solr state=restarted
