@@ -1,0 +1,18 @@
+- stat: path={{solr_home}}/multicore
+  register: solr_multicore
+  tags: [solr]
+
+- service: name=solr state=stopped
+  when:  solr_multicore.stat.isdir is defined and solr_multicore.stat.isdir == true
+  tags: [solr]
+
+- name: Delete default multicore directory
+  command: rm -Rf {{solr_home}}/multicore
+  when:  solr_multicore.stat.isdir is defined and solr_multicore.stat.isdir == true
+  tags: [solr]
+
+- name: Create multicore symlink
+  file: state=link path={{solr_home}}/multicore src={{ solr_multicore_src }} force=yes
+  notify:
+    - solr restart
+  tags: [solr]

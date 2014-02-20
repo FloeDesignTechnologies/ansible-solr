@@ -3,4 +3,6 @@
 
 - include: solr_debian.yml
   when: ansible_distribution in [ 'Debian', 'Ubuntu' ]
-  
+
+- include: solr_multicore.yml
+  when: solr_multicore_src is defined
