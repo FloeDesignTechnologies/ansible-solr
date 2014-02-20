@@ -2,7 +2,8 @@
   register: solr_multicore
   tags: [solr]
 
-- service: name=solr state=stopped
+- name: Stop solr service
+  service: name=solr state=stopped
   when:  solr_multicore.stat.isdir is defined and solr_multicore.stat.isdir == true
   tags: [solr]
 
