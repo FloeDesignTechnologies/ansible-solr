@@ -1,8 +1,8 @@
 ---
 # file: roles/role-solr/tasks/main.yml
-
 - include: solr_debian.yml
   when: ansible_distribution in [ 'Debian', 'Ubuntu' ]
-
 - include: solr_multicore.yml
   when: solr_multicore_src is defined
+- name: "Start Apache Solr on boot"
+  service: name=solr enabled=true
