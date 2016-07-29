@@ -15,5 +15,4 @@ galaxy_info:
         - squeeze
   categories:
    - web
-dependencies: [ oracle7java ]
-  
+dependencies: [ oracle8java ]

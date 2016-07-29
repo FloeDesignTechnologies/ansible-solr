@@ -1,6 +1,9 @@
 ---
 # file: roles/role-solr/tasks/solr_debian.yml
 
+- name: Install lsof
+  package: name=lsof state=latest
+
 - name: Grab Solr
   get_url: url={{solr_source}}/{{solr_version}}/{{ solr_basename }}.tgz dest={{solr_destination}}/{{ solr_basename }}.tgz
   tags: [solr]
@@ -11,10 +14,26 @@
   file: state=link src={{solr_destination}}/{{ solr_basename }} dest={{solr_destination}}/solr
   tags: [solr]
 
+- name: Create solr user
+  user:
+    name=solr
+- name: Change solr path ownership
+  command: find {{solr_destination}}/{{ solr_basename }} -exec chown solr {} \;
+- name: Set HEAP size to 1G
+  command: sed -i -- 's/SOLR_HEAP="512m"/SOLR_HEAP="1024m"/g' {{solr_destination}}/{{ solr_basename }}/bin/solr.in.sh
+- name: Copy solr.in.sh to /etc/default
+  command: cp {{solr_destination}}/{{ solr_basename }}/bin/solr.in.sh /etc/default/
 - name: Startup script
-  template: > 
-    src=solr.j2 dest=/etc/init.d/solr
-    owner=root group=root mode=755
-  tags: [solr]
+  command: cp {{solr_destination}}/{{ solr_basename }}/bin/init.d/solr /etc/init.d/solr
+- name: Check Install DIR
+  shell: grep 'SOLR_INSTALL_DIR="/opt/solr"' /etc/init.d/solr
+  register: grep
+- name: Set Install DIR
+  replace:
+    dest=/etc/init.d/solr
+    regexp='SOLR_INSTALL_DIR="/opt/solr"'
+    replace='SOLR_INSTALL_DIR="{{solr_destination}}/{{ solr_basename }}"'
+    backup=yes
   notify:
-   - solr restart
+    - solr restart
+  when: grep.stdout

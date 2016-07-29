@@ -2,8 +2,8 @@
 # file: roles/role-solr/defaults/main.yml
 
 solr_source: http://apache.openmirror.de/lucene/solr
-solr_version: 4.10.4
+solr_version: 6.1.0
 solr_destination: /usr/local/src
-solr_home: "{{solr_destination}}/solr/example"
 solr_memory: 1024
-solr_basename: solr-{{solr_version}}
+solr_basename: solr-{{ solr_version }}
+solr_home: "{{ solr_destination }}/{{ solr_basename }}/server"

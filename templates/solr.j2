@@ -19,9 +19,11 @@ DESC="Solr"
 # Process name ( For display )
 NAME="solr"
 # Daemon name, where is the actual executable
-DAEMON=/usr/bin/java
+#DAEMON=/usr/bin/java
+DAEMON="{{ solr_destination }}/{{ solr_basename }}/solr"
 # Read about the available options at: http://docs.oracle.com/javase/1.3/docs/tooldocs/solaris/java.html
-DAEMON_ARGS="-Xmx{{solr_memory}}m -DSTOP.PORT=8079 -DSTOP.KEY=stopkey -Dsolr.solr.home=multicore -jar start.jar"
+#DAEMON_ARGS="-Xmx{{solr_memory}}m -DSTOP.PORT=8079 -DSTOP.KEY=stopkey -Dsolr.solr.home=multicore -jar start.jar"
+DAEMON_ARGS="start -m {{solr_memory}}m"
 # pid file for the daemon
 PIDFILE=/var/run/$NAME.pid
 # script name
