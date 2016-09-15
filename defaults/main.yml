@@ -1,7 +1,7 @@
 ---
 # file: roles/role-solr/defaults/main.yml
 
-solr_source: http://apache.openmirror.de/lucene/solr
+solr_source: http://archive.apache.org/dist/lucene/solr/
 solr_version: 6.1.0
 solr_destination: /usr/local/src
 solr_memory: 1024
