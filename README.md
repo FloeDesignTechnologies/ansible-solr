@@ -8,7 +8,7 @@ Role Variables
 
 The following variables can be used with the solr role:
 
-* **solr_source**: URL where to retrieve Solr, defaults 'http://apache.openmirror.de/lucene/solr'.
+* **solr_source**: URL where to retrieve Solr, defaults 'http://archive.apache.org/dist/lucene/solr/'.
 * **solr_version**: Solr version to use, defaults to '6.1.0'.
 * **solr_destination**: Where to install Solr, defaults to '/usr/local/src'
 * **solr_home**: The path the Solr home directory, defaults to "{{solr_destination}}/solr/example".
